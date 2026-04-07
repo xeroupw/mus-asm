@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  release:
+    name: Build Release
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: mus-asm
+            asset_name: mus-asm-linux
+          - os: windows-latest
+            artifact_name: mus-asm.exe
+            asset_name: mus-asm-windows.exe
+          - os: macos-latest
+            artifact_name: mus-asm
+            asset_name: mus-asm-macos
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build
+        run: cargo build --release --locked
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: target/release/${{ matrix.artifact_name }}

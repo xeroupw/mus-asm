@@ -1,0 +1,234 @@
+:root {
+  --bg: #f8fafc;
+  --panel: rgba(255, 255, 255, 0.8);
+  --green: #1a2c3e;
+  --green-dim: #64748b;
+  --border: #e2e8f0;
+  --accent: #2563eb;
+  --selection: rgba(37, 99, 235, 0.1);
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-hover: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  height: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  color: var(--green);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+
+.content::before {
+  display: none;
+}
+
+.window {
+  position: relative;
+  width: 94vw;
+  height: 90vh;
+  margin: 5vh auto;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+.titlebar {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 2;
+}
+
+.content {
+  position: relative;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  height: 100%;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  border-right: 1px solid var(--border);
+  padding: 24px;
+  overflow-y: auto;
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.sidebar h3 {
+  margin: 0 0 16px;
+  font-size: 11px;
+  color: var(--green-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.tree-item {
+  cursor: pointer;
+  padding: 8px 12px;
+  margin: 2px 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: all 0.15s ease;
+}
+
+.tree-item:hover {
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.tree-item.active {
+  background: var(--accent);
+}
+
+.tree-item.active .tree-text,
+.tree-item.active .folder-arrow {
+  color: #fff;
+}
+
+.folder-arrow {
+  font-size: 10px;
+  color: var(--green-dim);
+  margin-right: 10px;
+}
+
+.tree-text {
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tree-children {
+  margin-left: 20px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+}
+
+.main-content {
+  padding: 48px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.prompt {
+  display: none;
+}
+
+.name {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 24px 0;
+  letter-spacing: -0.02em;
+}
+
+.cursor::after {
+  display: none;
+}
+
+.markdown-container {
+  flex: 1;
+  overflow-y: auto;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.markdown-container h1, 
+.markdown-container h2 {
+  color: #0f172a;
+  margin-top: 1.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--border);
+}
+
+.markdown-container code {
+  background: #f1f5f9;
+  color: #e11d48;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.markdown-container pre {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 1.5em 0;
+  overflow-x: auto;
+}
+
+.markdown-container pre code {
+  background: transparent;
+  color: #f8fafc;
+  padding: 0;
+  border: none;
+}
+
+.markdown-container blockquote {
+  border-left: 4px solid var(--accent);
+  background: #eff6ff;
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  color: #1e40af;
+}
+
+.sidebar::-webkit-scrollbar,
+.markdown-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.markdown-container::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+}
+
+@media (max-width: 900px) {
+  .window {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+  }
+  .content {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    width: 100%;
+    max-height: 30vh;
+    border-right: none;
+  }
+}
