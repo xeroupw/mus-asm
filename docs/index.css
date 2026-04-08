@@ -136,6 +136,7 @@ body {
 
 .main-content {
   padding: 48px;
+  padding-right: 28px;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -163,6 +164,7 @@ body {
   overflow-y: auto;
   color: #334155;
   line-height: 1.6;
+  padding-right: 20px;
 }
 
 .markdown-container h1, 
@@ -170,7 +172,14 @@ body {
   color: #0f172a;
   margin-top: 1.5em;
   padding-bottom: 0.5em;
-  border-bottom: 1px solid var(--border);
+  border-bottom: none;
+}
+
+.markdown-container hr {
+  margin: 2em 0;
+  border: 0;
+  height: 1px;
+  background: var(--border);
 }
 
 .markdown-container code {
@@ -183,18 +192,84 @@ body {
 }
 
 .markdown-container pre {
+  position: relative;
   background: #1e293b;
   padding: 20px;
   border-radius: 12px;
   margin: 1.5em 0;
   overflow-x: auto;
+  max-width: calc(100% - 20px);
 }
 
 .markdown-container pre code {
+  display: block;
   background: transparent;
   color: #f8fafc;
   padding: 0;
+  padding-right: 60px;
   border: none;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  opacity: 0.6;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.copy-btn.copied {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.markdown-container table {
+  width: 100%;
+  margin: 1.5em 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.95em;
+}
+
+.markdown-container table th,
+.markdown-container table td {
+  padding: 12px 16px;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+.markdown-container table th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #0f172a;
+  border-bottom: 2px solid var(--border);
+}
+
+.markdown-container table tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.markdown-container table tr:hover {
+  background: #f1f5f9;
 }
 
 .markdown-container blockquote {

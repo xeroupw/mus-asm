@@ -107,6 +107,41 @@ class DocViewer {
         renderItems(structure);
     }
 
+    addCopyButtons() {
+        document.querySelectorAll('.markdown-container pre').forEach(pre => {
+            if (pre.querySelector('.copy-btn')) return;
+            
+            pre.style.position = 'relative';
+            
+            const btn = document.createElement('button');
+            btn.className = 'copy-btn';
+            btn.innerHTML = '📋';
+            btn.title = 'Copy';
+            
+            btn.addEventListener('click', async () => {
+                const code = pre.querySelector('code');
+                const text = code ? code.textContent : pre.textContent;
+                
+                try {
+                    await navigator.clipboard.writeText(text);
+                    btn.innerHTML = '✓';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.innerHTML = '📋';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                } catch (err) {
+                    btn.innerHTML = '✗';
+                    setTimeout(() => {
+                        btn.innerHTML = '📋';
+                    }, 2000);
+                }
+            });
+            
+            pre.appendChild(btn);
+        });
+    }
+
     async loadFile(path) {
         document.querySelectorAll('.tree-item.active').forEach(i => {
             i.classList.remove('active');
@@ -146,6 +181,8 @@ class DocViewer {
                     hljs.highlightElement(block);
                 });
             }
+            
+            this.addCopyButtons();
 
         } catch {
             container.innerHTML = '<div class="error">failed to load</div>';
